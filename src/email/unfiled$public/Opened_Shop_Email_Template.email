@@ -1,0 +1,2 @@
+Dear {!User.FirstName},
+Happy to inform you that we opened a new {!Shop__c.RecordType} {!Shop__c.Name} on {!Shop__c.CreatedDate}!

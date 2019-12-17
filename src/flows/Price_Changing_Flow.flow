@@ -28,6 +28,10 @@
             </value>
         </filters>
         <object>Product2</object>
+        <outputAssignments>
+            <assignToReference>test.Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
         <valueField>Name</valueField>
     </dynamicChoiceSets>
     <interviewLabel>Price Changing Flow {!$Flow.CurrentDateTime}</interviewLabel>
@@ -60,6 +64,16 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>sel</name>
+        <label>testAssign</label>
+        <locationX>363</locationX>
+        <locationY>95</locationY>
+        <connector>
+            <targetReference>Setting_new_price</targetReference>
+        </connector>
+        <inputReference>SelectedProducts</inputReference>
+    </recordCreates>
     <recordUpdates>
         <name>Update_Price</name>
         <label>Update Price</label>
@@ -84,13 +98,13 @@
     <screens>
         <name>List_of_Products</name>
         <label>List of Products</label>
-        <locationX>162</locationX>
-        <locationY>128</locationY>
+        <locationX>165</locationX>
+        <locationY>105</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Setting_new_price</targetReference>
+            <targetReference>sel</targetReference>
         </connector>
         <fields>
             <name>Get_Products</name>
@@ -110,6 +124,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Loop_Selected_Products</targetReference>
+        </connector>
         <fields>
             <name>Set_new_price_for_selected_Products</name>
             <dataType>Currency</dataType>
@@ -121,6 +138,11 @@
                 <errorMessage>&lt;p&gt;Set value between 10 and 1000!&lt;/p&gt;</errorMessage>
                 <formulaExpression>{!Set_new_price_for_selected_Products} &gt; 10 &amp;&amp; {!Set_new_price_for_selected_Products} &lt; 1000</formulaExpression>
             </validationRule>
+        </fields>
+        <fields>
+            <name>test_disp</name>
+            <fieldText>&lt;p&gt;{!sel}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -152,6 +174,14 @@
         <name>SelectedProducts</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Product2</objectType>
+    </variables>
+    <variables>
+        <name>test</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Product2</objectType>
