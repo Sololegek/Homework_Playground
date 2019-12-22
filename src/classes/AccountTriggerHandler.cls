@@ -8,7 +8,8 @@ public without sharing class AccountTriggerHandler {
         AccountTriggerHelper.createTask(accounts);
     }
 
-    public static void onAfterUpdate(List<Account> accounts){
-        AccountTriggerHelper.reassignTasks(accounts);
+    public static void onAfterUpdate(Map<Id,Account> oldMap, Map<Id,Account> newMap){
+        AccountTriggerHelper.reassignTasks(newMap.values());
+        AccountTriggerHelper.updateAddress(oldMap, newMap);
     }
 }

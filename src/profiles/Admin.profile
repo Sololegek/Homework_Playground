@@ -98,6 +98,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountTriggerHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AddPrimaryContact</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -119,6 +127,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>LeadProcessorTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TaskTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TaskTriggerHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>

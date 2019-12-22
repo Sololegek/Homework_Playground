@@ -5,10 +5,21 @@
 public without sharing class AccountTriggerHelper {
 
     public static void createTask(List<Account> accounts){
+        List<Id> ids = new List<Id>();
+        for (Account account : accounts) {
+            ids.add(account.Id);
+        }
+        createFutureTasks(ids);
+    }
+
+    @Future
+    private static void createFutureTasks(List<Id> ids){
+        List<Account> accounts = [SELECT Name FROM Account WHERE Id in :ids];
         List<Task> tasks = new List<Task>();
         for (Account account : accounts) {
             Task task = new Task(Subject = 'Negotiations with ' + account.Name);
             task.WhatId = account.Id;
+            task.Is_Synced__c = false;
             tasks.add(task);
         }
         insert tasks;
@@ -28,5 +39,30 @@ public without sharing class AccountTriggerHelper {
             }
         }
         update tasks;
+    }
+
+    public static void updateAddress(Map<Id, Account> oldMap, Map<Id, Account> newMap){
+        List<Id> ids = new List<Id>();
+        for (Account account : newMap.values()){
+            Account oldAccount = oldMap.get(account.id);
+            if (!account.BillingStreet.equals(oldAccount.BillingStreet) ||
+                    !account.BillingCity.equals(oldAccount.BillingCity) ||
+                    !account.BillingState.equals(oldAccount.BillingState) ||
+                    !account.BillingCountry.equals(oldAccount.BillingCountry) ||
+                    !account.BillingPostalCode.equals(oldAccount.BillingPostalCode)){
+                ids.add(account.id);
+            }
+        }
+        updateFutureAddress(ids);
+    }
+
+    @Future
+    private static void updateFutureAddress(List<Id> ids){
+        List<Contact> contacts = [SELECT Is_Synced__c, Processed_By_Future__c FROM Contact WHERE AccountId in :ids];
+        for (Contact contact : contacts){
+            contact.Is_Synced__c = false;
+            contact.Processed_By_Future__c = true;
+        }
+        update contacts;
     }
 }

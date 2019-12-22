@@ -7,6 +7,6 @@ trigger AccountTrigger on Account (after insert, after update) {
     if(Trigger.isInsert && Trigger.isAfter){
         AccountTriggerHandler.onAfterInsert(Trigger.new);
     } else if(Trigger.isUpdate && Trigger.isAfter){
-        AccountTriggerHandler.onAfterUpdate(Trigger.new);
+        AccountTriggerHandler.onAfterUpdate(Trigger.oldMap, Trigger.newMap);
     }
 }
