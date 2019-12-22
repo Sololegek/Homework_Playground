@@ -10,6 +10,7 @@ public without sharing class AccountTriggerHelper {
             ids.add(account.Id);
         }
         createFutureTasks(ids);
+
     }
 
     @Future
@@ -43,6 +44,7 @@ public without sharing class AccountTriggerHelper {
 
     public static void updateAddress(Map<Id, Account> oldMap, Map<Id, Account> newMap){
         List<Id> ids = new List<Id>();
+        Boolean isAddressChanged = false;
         for (Account account : newMap.values()){
             Account oldAccount = oldMap.get(account.id);
             if (account.BillingStreet != oldAccount.BillingStreet ||
@@ -51,11 +53,14 @@ public without sharing class AccountTriggerHelper {
                     account.BillingCountry != oldAccount.BillingCountry ||
                     account.BillingPostalCode != oldAccount.BillingPostalCode){
                 ids.add(account.id);
+                isAddressChanged = true;
             }
         }
-        updateFutureAddress(ids);
-        AddressQueueableProcessor addressQueueableProcessor = new AddressQueueableProcessor(ids);
-        System.enqueueJob(addressQueueableProcessor);
+        if (isAddressChanged) {
+            updateFutureAddress(ids);
+            AddressQueueableProcessor addressQueueableProcessor = new AddressQueueableProcessor(ids);
+            System.enqueueJob(addressQueueableProcessor);
+        }
     }
 
     @Future
