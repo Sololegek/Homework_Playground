@@ -45,11 +45,11 @@ public without sharing class AccountTriggerHelper {
         List<Id> ids = new List<Id>();
         for (Account account : newMap.values()){
             Account oldAccount = oldMap.get(account.id);
-            if (!account.BillingStreet.equals(oldAccount.BillingStreet) ||
-                    !account.BillingCity.equals(oldAccount.BillingCity) ||
-                    !account.BillingState.equals(oldAccount.BillingState) ||
-                    !account.BillingCountry.equals(oldAccount.BillingCountry) ||
-                    !account.BillingPostalCode.equals(oldAccount.BillingPostalCode)){
+            if (account.BillingStreet != oldAccount.BillingStreet ||
+                    account.BillingCity != oldAccount.BillingCity ||
+                    account.BillingState != oldAccount.BillingState ||
+                    account.BillingCountry != oldAccount.BillingCountry ||
+                    account.BillingPostalCode != oldAccount.BillingPostalCode){
                 ids.add(account.id);
             }
         }
