@@ -54,6 +54,8 @@ public without sharing class AccountTriggerHelper {
             }
         }
         updateFutureAddress(ids);
+        AddressQueueableProcessor addressQueueableProcessor = new AddressQueueableProcessor(ids);
+        System.enqueueJob(addressQueueableProcessor);
     }
 
     @Future
