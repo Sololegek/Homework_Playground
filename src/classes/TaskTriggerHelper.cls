@@ -8,6 +8,7 @@ public without sharing class TaskTriggerHelper {
     public static void changeStatus(Map<Id, Task> oldMap, Map<Id, Task> newMap){
         List<Task> tasks = getChangingTasks(oldMap, newMap);
         List<Account> accounts = new List<Account>();
+
         for (Task task : tasks){
             Account account = [SELECT Plans_Discussed__c FROM Account WHERE Id = :task.WhatId];
             account.Plans_Discussed__c = true;
