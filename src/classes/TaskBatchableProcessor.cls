@@ -9,19 +9,29 @@ public with sharing class TaskBatchableProcessor implements Database.Batchable<S
     }
 
     public void execute(Database.BatchableContext context, List<Task> tasks) {
-        List<Account> accounts = new List<Account>();
-        for (Task task : tasks){
-            Account account = [SELECT OwnerId, Updated_By_Task__c FROM Account WHERE Id = :task.WhatId];
-            User user = [SELECT Name FROM User WHERE Id = :account.OwnerId];
-            task.Account_Owner__c = user.Name;
-            task.Is_Synced__c = true;
-            account.Updated_By_Task__c = true;
-            if (!accounts.contains(account)) {
-                accounts.add(account);
+        if (tasks != null && !tasks.isEmpty()) {
+            Set<Id> ids = new Set<Id>();
+            for (Task task : tasks) {
+                ids.add(task.WhatId);
+            }
+            if (!ids.isEmpty()) {
+                List<Account> accounts = [SELECT Owner.Name, Updated_By_Task__c FROM Account WHERE Id IN :ids];
+                if (!accounts.isEmpty()) {
+                    Map<Id, Account> accountMap = new Map<Id, Account>();
+                    for (Account account : accounts){
+                        accountMap.put(account.Id, account);
+                    }
+                    for (Task task : tasks) {
+                        task.Account_Owner__c = accountMap.get(task.WhatId).Owner.Name;
+                        task.Is_Synced__c = true;
+                        accountMap.get(task.WhatId).Updated_By_Task__c = true;
+                    }
+                    update tasks;
+                    update accountMap.values();
+                }
             }
         }
-        update tasks;
-        update accounts;
+
     }
 
     public void finish(Database.BatchableContext context) {

@@ -4,12 +4,18 @@
 
 public without sharing class AccountTriggerHandler {
 
-    public static void onAfterInsert(List<Account> accounts){
-        AccountTriggerHelper.createTask(accounts);
+    public static Boolean runFlag = true;
+
+    public static void onAfterInsert(Map<Id,Account> newMap){
+        if (newMap != null) {
+            AccountTriggerHelper.createTask(newMap.keySet());
+        }
     }
 
     public static void onAfterUpdate(Map<Id,Account> oldMap, Map<Id,Account> newMap){
-        AccountTriggerHelper.reassignTasks(newMap.values());
-        AccountTriggerHelper.updateAddress(oldMap, newMap);
+        if (newMap != null && oldMap != null) {
+            AccountTriggerHelper.reassignTasks(newMap);
+            AccountTriggerHelper.updateAddress(oldMap, newMap);
+        }
     }
 }

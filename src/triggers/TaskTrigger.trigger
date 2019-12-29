@@ -4,7 +4,10 @@
 
 trigger TaskTrigger on Task (after update) {
 
-    if (Trigger.isUpdate && Trigger.isAfter) {
-        TaskTriggerHandler.onAfterUpdate(Trigger.oldMap, Trigger.newMap);
+    if (TaskTriggerHandler.runFlag) {
+        TaskTriggerHandler.runFlag = false;
+        if (Trigger.isUpdate && Trigger.isAfter) {
+            TaskTriggerHandler.onAfterUpdate(Trigger.oldMap, Trigger.newMap);
+        }
     }
 }

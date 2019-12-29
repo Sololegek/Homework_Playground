@@ -4,10 +4,9 @@
 
 public with sharing class BatchScheduler implements Schedulable{
 
-    private static ContactBatchableProcessor contactBatchableProcessor = new ContactBatchableProcessor();
-    private static TaskBatchableProcessor taskBatchableProcessor = new TaskBatchableProcessor();
-
     public void execute(SchedulableContext context) {
+        ContactBatchableProcessor contactBatchableProcessor = new ContactBatchableProcessor();
+        TaskBatchableProcessor taskBatchableProcessor = new TaskBatchableProcessor();
         Database.executeBatch(contactBatchableProcessor);
         Database.executeBatch(taskBatchableProcessor);
     }

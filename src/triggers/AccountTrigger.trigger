@@ -4,9 +4,12 @@
 
 trigger AccountTrigger on Account (after insert, after update) {
 
-    if(Trigger.isInsert && Trigger.isAfter){
-        AccountTriggerHandler.onAfterInsert(Trigger.new);
-    } else if(Trigger.isUpdate && Trigger.isAfter){
-        AccountTriggerHandler.onAfterUpdate(Trigger.oldMap, Trigger.newMap);
+    if (AccountTriggerHandler.runFlag) {
+        AccountTriggerHandler.runFlag = false;
+        if (Trigger.isInsert && Trigger.isAfter) {
+            AccountTriggerHandler.onAfterInsert(Trigger.newMap);
+        } else if (Trigger.isUpdate && Trigger.isAfter) {
+            AccountTriggerHandler.onAfterUpdate(Trigger.oldMap, Trigger.newMap);
+        }
     }
 }
