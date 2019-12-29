@@ -44,7 +44,7 @@ global with sharing class RestAccount {
     global static Id upsertAccount(String id, String name){
         Account account = new Account();
         account.Name = name;
-        Account.Id = id;
+        account.Id = id;
         upsert account;
         return account.Id;
     }
