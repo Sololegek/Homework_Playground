@@ -41,10 +41,15 @@ global with sharing class RestAccount {
     }
 
     @HttpPut
-    global static Id upsertAccount(String id, String name){
+    global static Id upsertAccount(){
+        RestRequest request = RestContext.request;
         Account account = new Account();
-        account.Name = name;
-        account.Id = id;
+        Map<String, Object> params = (Map<String, Object>) JSON.deserializeUntyped(request.requestBody.toString());
+        for (String fieldName : params.keySet()) {
+            if (params.get(fieldName) != 'null'){
+            	account.put(fieldName, params.get(fieldName));
+            }
+        }
         upsert account;
         return account.Id;
     }
