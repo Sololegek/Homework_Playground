@@ -24,9 +24,9 @@ public without sharing class TaskTriggerHelper {
     private static List<Id> getChangingTasks(Map<Id, Task> oldMap, Map<Id, Task> newMap){
         List<Id> ids = new List<Id>();
         for (Task task : newMap.values()){
-            if(task.Status.equals(STATUS)){
-                if(!oldMap.get(task.Id).Status.equals(STATUS)){
-                    ids.add(task.Id);
+            if(task.Status == STATUS){
+                if(oldMap.get(task.Id).Status != STATUS){
+                    ids.add(task.WhatId);
                 }
             }
         }

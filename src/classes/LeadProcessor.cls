@@ -2,8 +2,7 @@
  * Created by solol on 20.12.2019.
  */
 
-public with sharing class LeadProcessor implements Database.Batchable<Lead> {
-
+public with sharing class LeadProcessor implements Database.Batchable<SObject> {
 
     public Database.QueryLocator start(Database.BatchableContext context) {
         return Database.getQueryLocator('SELECT LeadSource FROM Lead');
@@ -17,7 +16,6 @@ public with sharing class LeadProcessor implements Database.Batchable<Lead> {
     }
 
     public void finish(Database.BatchableContext context) {
-        System.debug('Batch finished');
     }
 
 }
