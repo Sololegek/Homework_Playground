@@ -59,8 +59,6 @@ private class AccountTriggerHandlerTest {
         List<Account> accounts = getAccounts('test');
         accounts.addAll(getAccounts('overwhelmedTest'));
 
-        System.debug(accounts.size());
-
         Test.startTest();
         update accounts;
         Test.stopTest();

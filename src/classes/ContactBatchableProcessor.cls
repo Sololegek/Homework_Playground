@@ -5,7 +5,7 @@
 public with sharing class ContactBatchableProcessor implements Database.Batchable<Contact> {
 
     public Iterable<Contact> start(Database.BatchableContext context) {
-        return [SELECT AccountId, MailingCity, MailingCountry, MailingStreet, Is_Synced__c FROM Contact WHERE Is_Synced__c = false AND AccountId != null];
+        return [SELECT AccountId, MailingCity, MailingCountry, MailingStreet, Is_Synced__c FROM Contact WHERE Is_Synced__c = FALSE AND AccountId != NULL];
     }
 
     public void execute(Database.BatchableContext context, List<Contact> contacts) {
