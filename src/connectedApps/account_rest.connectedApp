@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>sol.olegek@gmail.com</contactEmail>
+    <label>account rest</label>
+    <oauthConfig>
+        <callbackUrl>https://brave-otter-ykdwy-dev-ed.salesforce.com/</callbackUrl>
+        <consumerKey>3MVG9n_HvETGhr3CqQBrI16TVxse0PxsufnOJyWY5aYbynO4lhLDRhEr8q6LGgpdWdw8Iq6Df7FOYBLnsQ2gb</consumerKey>
+        <isAdminApproved>false</isAdminApproved>
+        <scopes>Full</scopes>
+    </oauthConfig>
+</ConnectedApp>
